@@ -52,3 +52,16 @@ in STATION is greater than . Round your answer to  decimal places. */
 select cast(long_w as decimal(10,4)) from station
 where lat_n = (select min(lat_n) from station where lat_n > 38.7780);
 
+/* Consider P1(a,b) and P2 (c,d)to be two points on a 2D plane.
+a - min of LAT_N
+b - min of LONG_W
+c - max of LAT_N
+d - max of LONG_W
+Query the Manhattan Distance between points  and  and round it to a scale of  decimal places.
+*/
+
+select cast(round((x2 - x1) + ( y2 - y1),4) as decimal(10,4)) from (
+		select min(lat_n) as x1, min(long_w) as y1,
+		max(lat_n) as x2 , max(long_w) as y2
+		from station
+)t;
