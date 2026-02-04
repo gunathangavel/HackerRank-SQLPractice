@@ -49,3 +49,22 @@ pivot
     for occupation in ([Doctor],  [Professor],[Singer],[Actor])
 ) AS p;
 
+/*
+3. Given the table schemas below, write a query to print the company_code, founder name, 
+total number of lead managers, total number of senior managers, total number of managers, 
+and total number of employees. Order your output by ascending company_code.
+Note: The tables may contain duplicate records.
+*/
+
+select c.company_code, founder, 
+	 count(distinct lm.lead_manager_code) as lead_count ,
+	 count(distinct sm.senior_manager_code)as sr_count,
+	 count(distinct m.manager_code) as mng_count, 
+	 count(distinct e.employee_code) as emp_count 
+ from company c 
+	left join lead_manager lm on c.company_code = lm.company_code
+	left join senior_manager sm on c.company_code = sm.company_code
+	left join manager m on c.company_code = m.company_code
+	left join employee e on c.company_code = e.company_code
+group by c.company_code , founder
+order by c.company_code;
